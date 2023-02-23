@@ -1,9 +1,7 @@
-# Fire-Detection-Final-Project
-
-An autonomous robotic fire detection using Deep Learning **YOLOv5 algorithm and Rasberry pi 4** (2GB RAM)
+# Autonomous robotic fire detection using Deep Learning YOLOv5 algorithm and Rasberry pi 4
 
 As the name suggests, this project includes two different parts:<br>
-1. Creating a Fire Detection model, on Raspberry pi 4, using **custom dataset and Transfer Learning with YOLOv5 algorithm**.
+1. Creating a Fire Detection model, on Raspberry pi 4 (2GB RAM), using **custom dataset and Transfer Learning with YOLOv5 algorithm**.
 2. Autonomous robot which drives to the target once it is detected.<br>
 
 At this moment of writing, the fire detection part is completed and the second part is in the proccess of development.
