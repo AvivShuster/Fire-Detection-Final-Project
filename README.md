@@ -11,7 +11,7 @@ At this moment of writing, the fire detection part is completed and the second p
 In this project, our mission is to detect flames of fire in an indoor space.
 Therefore, We assembled a unique dataset which contains flames of candles and lighters, in different scenarios and lightning conditions.
 
-This dataset contains XXX images with a size of YYxYY.<br>
+This dataset contains 832 images with a size of 640x640.<br>
 
 The annotation process was executed with Roboflow, so in the end of the process, we had a custom yaml file in YOLOv5 format, which helps the model to know how to decide whether a flame is detected or not.<br>
 With Roboflow, we managed to implement various augmentations upon the dataset, so that it is vary diversified.
@@ -19,7 +19,7 @@ Therefore, the model will be more resilient and capable of dealing with frames w
 
 A summarization of the custom dataset generation:<br>
 
-
+![image](https://user-images.githubusercontent.com/121958931/220979734-b65b9f3a-9761-4bd7-a530-72b1c9c7c8ef.png)
 
 ## Setup
 
