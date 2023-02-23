@@ -1,5 +1,6 @@
 # Fire-Detection-Final-Project
-An autonomous robotic fire detection using Deep Learning
+
+An autonomous robotic fire detection using Deep Learning **YOLOv5 algorithm and Rasberry pi 4** (2GB RAM)
 
 As the name suggests, this project includes two different parts:<br>
 1. Fire Detection using custom dataset and Transfer Learning with YOLOv5 algorithm.
@@ -28,19 +29,23 @@ A summarization of the custom dataset generation:<br>
 ![image](https://user-images.githubusercontent.com/121958931/220930034-1bab3649-2123-40ce-bb31-117c3a29f37b.png)
 
 2. Import the desired packages and connect to ROBOFLOW:<br>
+![image](https://user-images.githubusercontent.com/121958931/220946259-a0781378-2e15-425e-a6b9-efd684b4fdde.png)
 
 3. Train our custom YOLOv5 model:<br>
-
+![image](https://user-images.githubusercontent.com/121958931/220946339-efdf1f05-e620-462b-80b0-d50f10b13435.png)
 
 The training process:<br>
-
+![image](https://user-images.githubusercontent.com/121958931/220946945-5e259e5b-a29a-4661-8251-3977086355fb.png)
 
 4. Run model with trained weights:<br>
-
+![image](https://user-images.githubusercontent.com/121958931/220947001-cea85f75-3e69-4576-8547-ac63973cc882.png)
 
 ## Results
 
-
+![image](https://user-images.githubusercontent.com/121958931/220947210-6b664c42-1d42-4260-a4e3-e24b28288e21.png)
+![image](https://user-images.githubusercontent.com/121958931/220947632-8951a910-a224-4ee4-bdf3-617c51f06733.png)
+![image](https://user-images.githubusercontent.com/121958931/220947843-2894b777-cb2c-4bbf-9e4d-ebe4375aed00.png)
+![image](https://user-images.githubusercontent.com/121958931/220947999-b8e73ff6-cad7-4a20-9674-24c089ca4f37.png)
 
 ## Summary and Conclusions of part 1
 
