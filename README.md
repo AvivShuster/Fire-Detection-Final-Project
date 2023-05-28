@@ -10,7 +10,7 @@ As the name suggests, this project includes two different parts:<br>
 In this project, our mission is to detect flames of fire in an indoor space.
 Therefore, We assembled a unique dataset which contains flames of candles, in different scenarios and lightning conditions, in a specific room.
 
-This dataset contains 832 images with a size of 640x640.<br>
+This dataset contains 630 images with a size of 640x640.<br>
 
 The annotation process was executed with Roboflow, so in the end of the process, we had a custom yaml file in YOLOv5 format, which helps the model to know how to decide whether a flame is detected or not.<br>
 With Roboflow, we managed to implement various augmentations upon the dataset, so that it is vary diversified.
@@ -40,13 +40,32 @@ The training process:<br>
 
 ## Results
 
-![image](https://user-images.githubusercontent.com/121958931/220947210-6b664c42-1d42-4260-a4e3-e24b28288e21.png)
-![image](https://user-images.githubusercontent.com/121958931/220947632-8951a910-a224-4ee4-bdf3-617c51f06733.png)
-![image](https://user-images.githubusercontent.com/121958931/220947843-2894b777-cb2c-4bbf-9e4d-ebe4375aed00.png)
-![image](https://user-images.githubusercontent.com/121958931/220947999-b8e73ff6-cad7-4a20-9674-24c089ca4f37.png)
+![image](https://github.com/AvivShuster/Fire-Detection-Final-Project/assets/121958931/ad0ca6f7-3500-4de2-a681-ff7f21e2fed9)<br>
+![image](https://github.com/AvivShuster/Fire-Detection-Final-Project/assets/121958931/a084c159-4347-4d00-80aa-425f52565512)<br>
+![image](https://github.com/AvivShuster/Fire-Detection-Final-Project/assets/121958931/d16fc493-ef23-430b-8737-895beb1f3614)<br>
 
 ## Summary and Conclusions of part 1 - running a trained machine learning model on Raspberry pi 4
 
 By the creation of a custom dataset and Transfer Learning with YOLOv5, we managed to teach the machine to successfully detect flames in a video frame, while running on Raspberry pi 4 microcontroller.
-In the future of this project, we will develop the autonomous of the robot, in C  (to insure **real time** behavior), while synchronising his actions with the trained model outputs.
+
+
+## Autonomous Robot
+In this section of the project, we developed the autonomousy of the robot, in C code (to insure **real time** behavior), while synchronising his actions with the trained model outputs.<br>
+
+![image](https://github.com/AvivShuster/Fire-Detection-Final-Project/assets/121958931/b2858d92-37d2-4cc9-b3c9-6c270b8089ec)<br>
+
+
+1. First, we cloned YOLOv5 repository to the Raspberry pi.
+2. than, we installed all the requirments (packages) that YOLOv5 needs in order to operate.
+3. We wrote a script, capture_img.py, that captures a single frame of the enviroment, through the webcam that is mount on the robot.
+The image that is captured, is an 480x640 sized image.<br>
+![image](https://github.com/AvivShuster/Fire-Detection-Final-Project/assets/121958931/6390634f-ca50-4cf0-9c13-24cfc98d2613)<br>
+
+5. We excuted the detect.py script (of YOLOv5) which implies the Deep Learning alogrithm upon the single frame, and decides if there a flame in the image, where it is (with bounding box) and the level of confidence in the classification.
+
+![image](https://github.com/AvivShuster/Fire-Detection-Final-Project/assets/121958931/364e1abb-6647-49eb-a8e3-57bfb51e1f22)<br>
+![image](https://github.com/AvivShuster/Fire-Detection-Final-Project/assets/121958931/875f7380-6f1c-4ca0-b3e3-57c5a1d65d4d)
+
+6. After YOLOV5 was classifying the object identity, it creats a text file which contains the object classification (represents as '0') and the four bounding box dimensions:<br>
+![image](https://github.com/AvivShuster/Fire-Detection-Final-Project/assets/121958931/b3e0390c-2852-40f2-8782-a1cd804689cd)<br>
 
