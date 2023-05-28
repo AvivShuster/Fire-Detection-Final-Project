@@ -1,0 +1,13 @@
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 1
+names: ['flame']
+
+roboflow:
+  workspace: hit-t6f0i
+  project: fire_detection_prod-qeamq
+  version: 1
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/hit-t6f0i/fire_detection_prod-qeamq/dataset/1
