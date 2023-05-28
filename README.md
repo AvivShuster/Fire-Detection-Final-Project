@@ -2,14 +2,13 @@
 
 As the name suggests, this project includes two different parts:<br>
 1. Creating a Fire Detection model, on Raspberry pi 4 (2GB RAM), using **custom dataset and Transfer Learning with YOLOv5 algorithm**.
-2. Autonomous robot which drives to the target once it is detected.<br>
+2. Autonomous robot which drives to the target once it is detected a flame.<br>
 
-At this moment of writing, the fire detection part is completed and the second part is in the proccess of development.
 
 ## Custom Dataset
 
 In this project, our mission is to detect flames of fire in an indoor space.
-Therefore, We assembled a unique dataset which contains flames of candles and lighters, in different scenarios and lightning conditions.
+Therefore, We assembled a unique dataset which contains flames of candles, in different scenarios and lightning conditions, in a specific room.
 
 This dataset contains 832 images with a size of 640x640.<br>
 
@@ -19,7 +18,7 @@ Therefore, the model will be more resilient and capable of dealing with frames w
 
 A summarization of the custom dataset generation:<br>
 
-![image](https://user-images.githubusercontent.com/121958931/220979734-b65b9f3a-9761-4bd7-a530-72b1c9c7c8ef.png)
+![image](https://github.com/AvivShuster/Fire-Detection-Final-Project/assets/121958931/9f9265f0-eddb-4265-bdca-b0fdf124e777)
 
 ## Setup
 
@@ -31,13 +30,13 @@ A summarization of the custom dataset generation:<br>
 
 3. Train our custom YOLOv5 model:<br>
 Important: **we trained the model on a strong computer with Google's GPU, and not on Raspberry pi due to his limited resources**<br>
-![image](https://user-images.githubusercontent.com/121958931/220946339-efdf1f05-e620-462b-80b0-d50f10b13435.png)
+![image](https://github.com/AvivShuster/Fire-Detection-Final-Project/assets/121958931/6bfd1038-81f2-4f1e-9d89-7d92adc1dcb8)
 
 The training process:<br>
-![image](https://user-images.githubusercontent.com/121958931/220946945-5e259e5b-a29a-4661-8251-3977086355fb.png)
+![image](https://github.com/AvivShuster/Fire-Detection-Final-Project/assets/121958931/9f56abd9-2401-44c2-a1c6-af85f3352a87)
 
 4. Run model with trained weights (**on Raspberry pi**):<br>
-![image](https://user-images.githubusercontent.com/121958931/220947001-cea85f75-3e69-4576-8547-ac63973cc882.png)
+![image](https://github.com/AvivShuster/Fire-Detection-Final-Project/assets/121958931/89351613-3a21-470f-83b5-061b9720e174)
 
 ## Results
 
