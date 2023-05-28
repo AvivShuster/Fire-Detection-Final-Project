@@ -82,3 +82,8 @@ two images that show the end of the robot searching and the classification:<br>
 ![image](https://github.com/AvivShuster/Fire-Detection-Final-Project/assets/121958931/57e53283-9e12-45ef-91ec-92c660ebfe13)<br>
 ![image](https://github.com/AvivShuster/Fire-Detection-Final-Project/assets/121958931/775c11f9-015f-4b39-9030-48c3233ed4fd)<br>
 ![image](https://github.com/AvivShuster/Fire-Detection-Final-Project/assets/121958931/c2c2cde2-2b3e-4ad5-8a7c-d80d32b4c93c)
+
+## Final Conclusions
+
+In this project we managed to develop an autonomous robot fire detection using state of the art Object Detection algorithm, on Raspberry Pi 4.
+It seems that robot is doing well on detecting and classifying flames, and manages to find them and reach to them, in a complex enviroment.
