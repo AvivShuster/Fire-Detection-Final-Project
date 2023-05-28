@@ -69,3 +69,16 @@ The image that is captured, is an 480x640 sized image.<br>
 6. After YOLOV5 was classifying the object identity, it creats a text file which contains the object classification (represents as '0') and the four bounding box dimensions:<br>
 ![image](https://github.com/AvivShuster/Fire-Detection-Final-Project/assets/121958931/b3e0390c-2852-40f2-8782-a1cd804689cd)<br>
 
+7. We wrote a code which implements an astrategy of the robot moving and dealing with obstacles and "empty" zones (when the robot sees nothing and has to scan the room in order to continue searching).
+
+8. finally, we tested the robot in aspecific room, in different scenarios:<br>
+  1. When it faces the flame directly with no obstacles.<br>
+  2. When it has to encounter one obstacle before reaching the flame.<br>
+  3. When it faces two obstacles or more before reaching the flame.<br>
+  4. when it faces a wall.<br>
+  5. when it faces a corner.<br>
+
+two images that show the end of the robot searching and the classification:<br>
+![image](https://github.com/AvivShuster/Fire-Detection-Final-Project/assets/121958931/57e53283-9e12-45ef-91ec-92c660ebfe13)<br>
+![image](https://github.com/AvivShuster/Fire-Detection-Final-Project/assets/121958931/775c11f9-015f-4b39-9030-48c3233ed4fd)<br>
+![image](https://github.com/AvivShuster/Fire-Detection-Final-Project/assets/121958931/c2c2cde2-2b3e-4ad5-8a7c-d80d32b4c93c)
