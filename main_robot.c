@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <python3.9/Python.h>
 #include <stdlib.h>
-#include <unistd.h>
 #include <wiringPi.h>
 #include <stdbool.h>
 #include <string.h>
@@ -9,9 +8,6 @@
 #include <sys/stat.h>
 #include <time.h>
 #include <sys/time.h>
-#include <signal.h>
-#include <assert.h>
-
 
 #define ENA_PIN 13
 #define IN1_PIN 23
@@ -35,25 +31,13 @@
 #define rotate_right set_motors(1,0,1,0)
 #define stop set_motors(0,0,0,0)
 
-#define center_bbox_dimensions_xmid 0.5
-#define center_bbox_dimensions_ymid 0.5
-#define center_bbox_dimensions_width 0.5
-#define center_bbox_dimensions_height 0.6 
-
 void bypass_obstacle();
 int move_when_no_obj(int time_cnt);
 
 char * path = "/home/raspi/robot/yolov5/runs/detect/";
-pthread_t thread_yolo,thread_ultrasonic;
 float distance = 0;
 int obstacle_flag = 0;
 
-
-typedef struct file_node {
-    char * file_name;
-    time_t creation_time;
-    struct file_node *next;
-} file_node;
 
 typedef struct object_bbox {
     int object;
@@ -114,7 +98,7 @@ float read_distance()
 
     // Calculate distance based on pulse duration
     float pulse_duration = (float)(pulse_end) - (float)(pulse_start);
-    float distance = pulse_duration / 58.0;
+    float distance = pulse_duration / 58.0;     // Time[us] * Velocity [cm/us] / 2 = Distance --> Distance = T[us]*(34400/2)[cm/s] = T[us]*17200[cm/s] = X/58
     return distance;
 }
 
@@ -139,7 +123,7 @@ char *get_last_created_folder()
     {
         char full_path[1024];
         sprintf(full_path, "%s%s", path, entry->d_name);
-        if(stat(full_path, &st) == -1) // retrieve inforamation acout the given path and check if it is valid
+        if(stat(full_path, &st) == -1) // retrieve inforamation about the given path and check if it is valid
         {
             printf("stat failed");
             continue;
@@ -171,7 +155,6 @@ char * check_obj_existence(char * last_dir_created)
 {
     char object_file_path[1024];
     static char line[50];
-    char * line_to_parse;
 
     sprintf(object_file_path,"%s/%s/%s",last_dir_created,"labels","img.txt");
 
@@ -194,7 +177,7 @@ object_bbox parse_object(char * line_to_parse)
     char *token;
     object_bbox object_info;
     float obj_arr[5] = {};
-    int cnt = 1, index = 1;
+    int cnt = 1;
 
     //Get the first token
     token = strtok(line_to_parse,s);
@@ -219,7 +202,6 @@ void object_capture()
     char *last_dir_created, *line_to_parse;
     char object_file_path[1024];
     object_bbox temp_obj;
-    file_node * current = NULL, *list_head;
     
     last_dir_created = get_last_created_folder();
 
@@ -252,7 +234,7 @@ void object_capture()
     else
     {
         printf("*\n");
-        printf("*******No object detected.********\n"); // all values are 9 to know that its not ana object
+        printf("*******No object detected.********\n"); // all values are 9 to know that its not an object
         printf("*\n");
         detected_obj.object = 9;
         detected_obj.x_mid = 9;
@@ -261,18 +243,7 @@ void object_capture()
         detected_obj.height = 9;
     }
         
-        /////////////////need to free malloc//////////////////////   
-        current = list_head;
-        while(current != NULL)
-        {
-            file_node *temp = current;
-            current = current->next;
-            free(temp);
-        }
-        free(current);
-        
-        free(last_dir_created);
-        /////////////////need to free malloc//////////////////////
+       free(last_dir_created);
 }
 
 void capture_and_check()
@@ -295,7 +266,7 @@ void bypass_obstacle()
     distance = read_distance();
     delayMicroseconds(100000); // 0.1 sec
     printf("Distance is %f \n", distance);
-    while(distance < OBS_DISTANCE) //corrections
+    while(distance < OBS_DISTANCE) //corrections to the right
     {
         right; 
         delayMicroseconds(100000); // 0.1 sec
@@ -305,7 +276,7 @@ void bypass_obstacle()
         delayMicroseconds(100000); // 0.1 sec
         printf("Distance is %f \n", distance);
     } 
-    right; 
+    right; // an extra correction
     delayMicroseconds(400000); // 0.4 sec
     stop;
     delayMicroseconds(200000); // 0.2 sec
@@ -336,7 +307,7 @@ void bypass_obstacle()
         delayMicroseconds(100000); // 0.1 sec
         printf("Distance is %f \n", distance);
 
-        if(distance < MIN_DISTANCE)
+        if(distance < MIN_DISTANCE) 
         {
             returned_flag = 1;
             printf("*\n");
@@ -345,7 +316,7 @@ void bypass_obstacle()
             distance = read_distance();
             delayMicroseconds(100000); // 0.1 sec
             printf("Distance is %f \n", distance);
-            while(distance < OBS_DISTANCE)
+            while(distance < OBS_DISTANCE) // corrections to the left
             {
                 left; 
                 delayMicroseconds(100000); // 0.1 sec
@@ -355,12 +326,12 @@ void bypass_obstacle()
                 delayMicroseconds(100000); // 0.1 sec
                 printf("Distance is %f \n", distance);
             } 
-            left; 
+            left; // an extra correction
             delayMicroseconds(500000); // 0.5 sec
             stop;
             delayMicroseconds(200000); // 0.2 sec     
         }
-        else
+        else 
         {
             returned_flag = 0;
 
@@ -417,7 +388,7 @@ void bypass_obstacle()
 
     }
     
-    if(returned_flag == 1) // second bypass left to return
+    if(returned_flag == 1) // going left to perform a bypass from the left
     {
         printf("*\n");
         printf("*******going forward to the left, to bypass.********\n");
@@ -672,7 +643,7 @@ void scan_env()
             printf("*\n");
             delayMicroseconds(200000); // 0.2 sec
             left;
-            delayMicroseconds(300000); // 0.3 sec (8 angles for less than 360 deg)
+            delayMicroseconds(300000); // 0.3 sec (8 angles for ~270 deg)
             stop;
             delayMicroseconds(200000); // 0.2 sec
             printf("*\n");
@@ -689,14 +660,14 @@ void scan_env()
                     printf("*\n");
                     printf("need to bypass obstacle\n");
                     printf("*\n");
-                    bypass_obstacle(); // the robot recognised an obstacle before moving forward for the while 5 sec.
+                    bypass_obstacle(); // the robot recognised an obstacle before moving forward for 1.5 sec.
                 }
-                i=-1;  
+                i=-1; // next iteration, it will start from 0 
             }
         }
         else
         {
-            if(detected_obj.height > 0.1)
+            if(detected_obj.height > 0.1) // we decided that 0.1 is the height in which the flame is large enough to be declared as a closed object
             {
                 focus_left();
                 focus_right();
@@ -722,7 +693,7 @@ void main()
     INIT();
     pinMode(TRIG,OUTPUT);
     pinMode(ECHO,INPUT);
-    int i = 0, returned_flag = 0, cnt = 0, flag_scan = 0; 
+    int i = 0, flag_scan = 0; 
 
     stop;
     delayMicroseconds(20000); // 0.02 sec
@@ -784,13 +755,13 @@ void main()
                 else focus_right();
 
                 printf("*\n");
-                printf("******An obstacle/object was found ahead !!********\n",i);
+                printf("******An obstacle/object was found ahead !!********\n");
                 printf("*\n");
                 capture_and_check();
                 if(detected_obj.object == 0 && detected_obj.height > 0.1) // object is close 
                 {
                     printf("*\n");
-                    printf("******Standing in front of the fire!!********\n",i);
+                    printf("******Standing in front of the fire!!********\n");
                     printf("*\n");
                     for(i=0; i<20; i++)
                     {
@@ -805,7 +776,7 @@ void main()
                 }
                 else // it must be an obstacle
                 {
-                    bypass_obstacle(); // the robot recognised an obstacle before moving forward for the while 5 sec.
+                    bypass_obstacle(); // the robot recognised an obstacle before moving forward for 1.5 sec.
                     scan_env();
                 }
             }
@@ -848,7 +819,7 @@ void main()
                 }
                 else // it must be an obstacle
                 {
-                    bypass_obstacle(); // the robot recognised an obstacle before moving forward for the while 5 sec.
+                    bypass_obstacle(); // the robot recognised an obstacle before moving forward for 1.5 sec.
                     scan_env();
                 }
             }
